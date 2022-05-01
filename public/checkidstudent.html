@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  	<title>LINE LIFF</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+	<!-- <link rel="stylesheet" href="css/style.css"> -->
+
+	</head>
+	<body>
+	<section class="ftco-section">
+		<div class="container">
+			
+			<div class="row justify-content-center">
+				<div class="col-md-12">
+					<div class="wrapper">
+						<div class="row no-gutters">
+							<div class="col-md-7">
+								<div class="contact-wrap w-100 p-md-5 p-4">
+									<div id="form-message-warning" class="mb-4"></div> 
+				      		<!-- <div id="form-message-success" class="mb-4">
+				            Your message was sent, thank you!
+				      		</div> -->
+							  <!-- class="contactForm" -->
+									<form method="POST" id="contactForm" name="contactForm" class="form">
+										<div class="row">
+											<div class="col-md-6">
+												<div class="form-group">
+													<label class="label" for="username">รหัสประจำตัวนักศึกษา</label>
+													<input type="text" class="form-control" name="idstudent" id="user_login" >
+												</div>
+											</div>
+											<div class="col-md-6"> 
+												<div class="form-group">
+													<label class="label" for="password">รหัสผ่าน</label>
+													<input type="password" class="form-control" name="password" id="Password" >
+												</div>
+											</div>
+											<!-- <div class="col-md-12">
+												<div class="form-group">
+													<input type="submit" value="ยืนยัน" class="btn btn-primary">
+													<div class="submitting"></div>
+												</div>
+											</div> -->
+										</div>
+									</form>
+									<div class="col-md-12">
+										<div class="form-group">
+											<input type="submit" value="ยืนยัน" class="btn btn-primary">
+											<div class="submitting"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- The core Firebase JS SDK is always required and must be listed first -->
+  	<script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-app.js"></script>
+
+  	<!-- TODO: Add SDKs for Firebase products that you want to use
+    https://firebase.google.com/docs/web/setup#available-libraries -->
+  	<script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-firestore.js"></script>
+	<!-- LINE LIFF SDK -->
+	<script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+    <script>
+		const firebaseConfig = {
+			apiKey: "AIzaSyBAjyr61X3u-S1x-IeevzEaUd90CZYywF0",
+			authDomain: "amdservertest.firebaseapp.com",
+			databaseURL: "https://amdservertest-default-rtdb.asia-southeast1.firebasedatabase.app",
+			projectId: "amdservertest",
+			storageBucket: "amdservertest.appspot.com",
+			messagingSenderId: "464245583021",
+			appId: "1:464245583021:web:27e5e67b2aa0618deaaa24",
+			measurementId: "G-HWGM3VD88J"
+			};
+		// Initialize Firebase
+		firebase.initializeApp(firebaseConfig);
+		const db = firebase.firestore();
+	  </script>
+    <script src="./scriptGetdata.js?cache=-234234"></script>
+	<script src="./lineliff.js?cache=23423423"></script>
+	<script src="js/jquery.min.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.validate.min.js"></script> 
+    <script src="js/main.js"></script>
+
+    <script>
+        document.write('<link rel="stylesheet" href="css/style.css?cache=' + new Date().getTime() + '">')
+    </script>
+
+	</body>
+</html>
+

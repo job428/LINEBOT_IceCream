@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FoodAirForceClub Backend System</title>
+  <link rel="stylesheet" href="./style.css">
+  <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet"/>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h3>Grade</h3>
+    </header>
+    <div class="table-wrapper">
+      <table class="table-users">
+        <tr>
+          <th>รหัสเมนู</th>
+          <th>ชื่อ</th>
+          <th>ราคา</th>
+          <th>Action</th>
+        </tr>
+      </table>
+      <button class="btn btn-add">เพิ่มข้อมูล</button>
+      <button class="btn btn-add" id ="logout">Logout</button>
+    </div>
+
+    <!-- Add Modal -->
+    <div class="add-modal modal-wrapper">
+      <div class="modal">
+        <div class="modal-header"><h3>เพิ่มข้อมูล</h3></div>
+        <div class="modal-body">
+          <form class="form" autocomplete="off">
+            <div class="form1" >
+              <input type="text" name="name" placeholder="ชื่อเมนูอาหาร">
+              <input type="number" name="price" placeholder="ราคา">
+              <input type="text" name="imageUrl" placeholder="URL รูป">
+              
+            </div>
+            
+
+            <button class="btn btn-modal">ยืนยัน</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="edit-modal modal-wrapper">
+      <div class="modal">
+        <div class="modal-header"><h3>แก้ไขข้อมูล</h3></div>
+        <div class="modal-body">
+          <form class="form" autocomplete="off">
+            <div class="form1" >
+              <input type="text" name="idmenu" placeholder="รหัสเมนู" disabled>
+              <input type="text" name="name" placeholder="ชื่อเมนูอาหาร">
+              <input type="number" name="price" placeholder="ราคา">
+              <input type="text" name="imageUrl" placeholder="URL รูป">
+            </div>
+            
+            <button class="btn btn-modal">ยืนยัน</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+ 
+  <script>
+    //LOGIN
+    checkLogin()
+    function checkLogin(){
+      var username = localStorage.getItem("username")
+      if(!username){
+        window.location = "index.html"
+      }else{
+        // document.getElementById("name").innerHTML = username
+      }
+      
+    }
+    document.getElementById("logout").onclick = function(){
+			localStorage.clear()
+			window.location = "index.html"
+		}
+  </script>
+  
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-analytics.js";
+    
+    import { getDatabase , ref, set ,onValue, get, child , update , remove} from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
+   
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    // const firebaseConfig = {
+    //   apiKey: "AIzaSyBAjyr61X3u-S1x-IeevzEaUd90CZYywF0",
+    //   authDomain: "amdservertest.firebaseapp.com",
+    //   databaseURL: "https://amdservertest-default-rtdb.asia-southeast1.firebasedatabase.app",
+    //   projectId: "amdservertest",
+    //   storageBucket: "amdservertest.appspot.com",
+    //   messagingSenderId: "464245583021",
+    //   appId: "1:464245583021:web:27e5e67b2aa0618deaaa24",
+    //   measurementId: "G-HWGM3VD88J"
+    // };
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAdT5VEC7Lllx456RIaAlkQmaoMwCEhy3A",
+      authDomain: "air-force-club-9903e.firebaseapp.com",
+      databaseURL: "https://air-force-club-9903e-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "air-force-club-9903e",
+      storageBucket: "air-force-club-9903e.appspot.com",
+      messagingSenderId: "556108922033",
+      appId: "1:556108922033:web:f911a868aa5500fd0eb690",
+      measurementId: "G-B8D0ECLKEF"
+    };
+//     {
+//   "rules": {
+//     ".read": "now < 1645635600000",  // 2022-2-24
+//     ".write": "now < 1645635600000",  // 2022-2-24
+//   }
+// }
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const database = getDatabase(app);
+    const db = getDatabase()
+    
+    const dbRef = ref(getDatabase());
+
+get(child(dbRef, `Menu`)).then((snapshot) => {
+  if (snapshot.exists()) {
+    
+    Object.keys(snapshot.val()).forEach((key,index) => {
+      
+      // renderUser(snapshot.val()[key],key);
+    })
+  } else {
+    console.log("No data available");
+  }
+}).catch((error) => {
+  console.error(error);
+});
+// // Get all users
+// db.collection('users').get().then(querySnapshot => {
+//   querySnapshot.forEach(doc => {
+//     renderUser(doc);
+//   })
+// });
+
+// Click submit in edit modal
+editModalForm.addEventListener('submit', e => {
+  e.preventDefault();
+  update(ref(db, 'Menu/'+editModalForm.idmenu.value), {
+    name: editModalForm.name.value,
+    price: Number(editModalForm.price.value),
+    imageUrl:editModalForm.imageUrl.value
+    
+  });
+
+  editModal.classList.remove('modal-show');
+  location.reload();
+});
+
+const starCountRef = ref(db, 'Menu');
+onValue(starCountRef, (snapshot) => {
+  const data = snapshot.val();
+  Object.keys(data).forEach(async (key,index) =>{
+    // console.log('menu')
+    // console.log(data[key])
+    // document.getElementById('tbody').innerHTML = '';
+    await renderUser(data[key],key,remove,ref,db);
+    // 
+  })
+  
+  
+  // updateStarCount(postElement, data);
+});
+// // Real time listener
+// db.collection('users').onSnapshot(snapshot => {
+//   snapshot.docChanges().forEach(change => {
+//     if(change.type === 'added') {
+//       renderUser(change.doc);
+//     }
+//     if(change.type === 'removed') {
+//       let tr = document.querySelector(`[data-id='${change.doc.id}']`);
+//       let tbody = tr.parentElement;
+//       tableUsers.removeChild(tbody);
+//     }
+//     if(change.type === 'modified') {
+//       let tr = document.querySelector(`[data-id='${change.doc.id}']`);
+//       let tbody = tr.parentElement;
+//       tableUsers.removeChild(tbody);
+//       renderUser(change.doc);
+//     }
+//   })
+// })
+
+
+
+    addModalForm.addEventListener('submit', async e => {
+  e.preventDefault();
+  ;
+  //M0001
+  const datamenu = await getMenu(db)
+  console.log(datamenu)
+
+  let  idmenu
+  var str 
+  var pad 
+  var ans 
+
+  if(datamenu == null){
+    str = "" + 1
+    
+  }else{
+    var size = Object.keys(datamenu).length;
+    const lastKey = Object.keys(datamenu).pop();
+    str = "" + (Number(lastKey.substring(2, 5))+1)
+  }
+  pad = "0000"
+  ans = pad.substring(0, pad.length - str.length) + str
+  idmenu = 'M'+ ans
+  console.log('idmenu')
+  console.log(idmenu)
+  
+  set(ref(db, 'Menu/'+idmenu), {
+    name: addModalForm.name.value,
+    price: Number(addModalForm.price.value),
+    imageUrl:addModalForm.imageUrl.value
+    
+  });
+ 
+  modalWrapper.classList.remove('modal-show');
+  location.reload();
+});
+
+
+async function getMenu(db) {
+
+  const starCountRef = ref(db, 'Menu');
+
+  const dbRef = ref(getDatabase());
+  console.log('test')
+  var dataMenu =  await get(child(dbRef, `Menu`)).then((snapshot) => {
+    if (snapshot.exists()) {
+      // console.log(snapshot.val());
+
+    } else {
+      console.log("No data available");
+    }
+    return snapshot.val()
+  }).catch((error) => {
+    console.error(error);
+  })
+
+  return dataMenu
+ 
+}
+  </script>
+  
+  <script src="./script.js"></script>
+</body>
+</html>
